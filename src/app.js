@@ -52,7 +52,7 @@ main.on('click', 'up', function(e) {
 });
 
 main.on('click', 'select', function(e) {
-  loadFavDevices();
+  loadPages();
 });
 
 main.on('click', 'down', function(e) {
@@ -75,18 +75,79 @@ function loadAllDevicesCallBack(data) {
   _loadingScreen.hide();
 }
 
-function loadFavDevices(){
-  loadFromUrl("pages/pebble", loadFavDevicesCallBack);
+function loadPage(page){
+  loadFromUrl("pages/"+page, loadPageCallBack);
 }
-function loadFavDevicesCallBack(data){
+function loadPageCallBack(data){
   var devices = [ ];
-  for (var device in data.page.devices) {
-    console.log("id: " + data.page.devices[device].deviceId);
-    loadFromUrl("devices/" + data.page.devices[device].deviceId, null);
+  var page = data.page;
+  for (var device in page.devices) {
+    console.log("id: " + page.devices[device].deviceId);
+    loadFromUrl("devices/" + page.devices[device].deviceId, null);
     devices.push(_rtnData.device);
   }
-  showDevices(devices, "Favourites");
+  showDevices(devices, data.name);
   _loadingScreen.hide();
+}
+
+function loadPages() {
+  loadFromUrl("pages/", loadPagesCallBack);
+}
+
+function loadPagesCallBack(data) {
+  var next;
+  // set names
+  var items = [ ]; 
+  var pages = data.pages;
+  
+  for(var page in pages){
+    next = Object.prototype.toString.call(page);
+    console.log("next page is " + page + " - " + next);
+    
+    pages[page].myActions = getPageActions(pages[page]);
+    items.push({item: pages[page], title: pages[page].name, subtitle: ""});
+  }
+  var menu = new UI.Menu({
+    sections: [{
+      title: "Pages",
+      items: items
+    }],
+  });
+  menu.on('longSelect', function(e) {
+    console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
+    console.log('The item is titled "' + e.item.title + '"');
+    console.log('The item is toString "' + e.item.toString() + '"');
+    if (e.item.item.myActions !== null && e.item.item.myActions.longPressAction !== null) {
+      e.item.item.myActions.longPressAction();
+    }
+
+  });
+  menu.on('select', function(e) {
+    console.log('Selected item #' + e.itemIndex + " - " + e.item.title +' of section #' + e.sectionIndex);
+    console.log("e.item.item.myActions.longPressAction: " + e.item.item.myActions.longPressAction);
+    
+    if (e.item.item.myActions !== null && e.item.item.myActions.shortPressAction !== null) {
+      e.item.item.myActions.shortPressAction();
+    }
+    
+    // fetch new subtitle and redraw
+    e.item.subtitle =  getDeviceState(e.item.item.id);
+    menu.selection(function() {
+      // update the virtual menu and immediately send updates for visible items
+      // see http://forums.getpebble.com/discussion/15268/pebblejs-how-to-dynamically-create-a-ui-menu
+      menu.items(0, items);
+    });
+    
+  });
+  menu.show();
+}
+
+function getPageActions(page) {
+  var shortPress = function() {loadPage(page.id);};
+  return {
+    longPressAction: function() {loadPage(page.id);},
+    shortPressAction: shortPress
+  };
 }
 
 function showDevices(devices, title){
@@ -187,6 +248,8 @@ function loadFromUrl(url, callback) {
   //startLoading();
   if (callback !== null)
     startLoading();
+  
+  console.log("Loading: "+url);
   
   ajax(
     {

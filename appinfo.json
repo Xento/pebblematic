@@ -3,7 +3,7 @@
     "capabilities": [
         "configurable"
     ],
-    "companyName": "Max Winterstein",
+    "companyName": "Markus Minini",
     "longName": "Pebble & pimatic",
     "projectType": "pebblejs",
     "resources": {
@@ -29,18 +29,13 @@
                 "type": "font"
             },
             {
-                "file": "images/pimatic-logo-new - Kopie - Kopie.png",
-                "name": "IMAGES_PIMATIC_LOGO_NEW___KOPIE___KOPIE_PNG",
-                "type": "png"
-            },
-            {
                 "file": "images/pimatic-logo-new.png",
-                "menuIcon": true,
                 "name": "IMAGES_PIMATIC_LOGO_NEW_PNG",
                 "type": "png"
             },
             {
                 "file": "images/pebblematic-icon-sw.png",
+                "menuIcon": true,
                 "name": "IMAGES_PEBBLEMATIC_ICON_SW_PNG",
                 "type": "png"
             }
@@ -50,8 +45,9 @@
     "shortName": "PebbleMatic",
     "uuid": "696a3ffc-c9f5-48dc-9a16-92ef3da951da",
     "versionCode": 1,
-    "versionLabel": "1.1",
+    "versionLabel": "1.0",
     "watchapp": {
+        "hiddenApp": false,
         "watchface": false
     }
 }
