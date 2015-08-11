@@ -18,6 +18,7 @@ var mySettings = require('mysettings');
 
 var _rtnData;
 var _loadingScreen = null;
+var _menu;
 
 Light.on();
 
@@ -84,9 +85,12 @@ function loadPageCallBack(data){
   for (var device in page.devices) {
     console.log("id: " + page.devices[device].deviceId);
     loadFromUrl("devices/" + page.devices[device].deviceId, null);
-    devices.push(_rtnData.device);
+    
+    if(_rtnData.device !== undefined)
+      devices.push(_rtnData.device);
   }
-  showDevices(devices, data.name);
+  console.log(page.name);
+  showDevices(devices, page.name);
   _loadingScreen.hide();
 }
 
@@ -107,13 +111,13 @@ function loadPagesCallBack(data) {
     pages[page].myActions = getPageActions(pages[page]);
     items.push({item: pages[page], title: pages[page].name, subtitle: ""});
   }
-  var menu = new UI.Menu({
+  _menu = new UI.Menu({
     sections: [{
       title: "Pages",
       items: items
     }],
   });
-  menu.on('longSelect', function(e) {
+  _menu.on('longSelect', function(e) {
     console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
     console.log('The item is titled "' + e.item.title + '"');
     console.log('The item is toString "' + e.item.toString() + '"');
@@ -122,7 +126,7 @@ function loadPagesCallBack(data) {
     }
 
   });
-  menu.on('select', function(e) {
+  _menu.on('select', function(e) {
     console.log('Selected item #' + e.itemIndex + " - " + e.item.title +' of section #' + e.sectionIndex);
     console.log("e.item.item.myActions.longPressAction: " + e.item.item.myActions.longPressAction);
     
@@ -130,16 +134,8 @@ function loadPagesCallBack(data) {
       e.item.item.myActions.shortPressAction();
     }
     
-    // fetch new subtitle and redraw
-    e.item.subtitle =  getDeviceState(e.item.item.id);
-    menu.selection(function() {
-      // update the virtual menu and immediately send updates for visible items
-      // see http://forums.getpebble.com/discussion/15268/pebblejs-how-to-dynamically-create-a-ui-menu
-      menu.items(0, items);
-    });
-    
   });
-  menu.show();
+  _menu.show();
 }
 
 function getPageActions(page) {
@@ -195,14 +191,15 @@ function showDevices(devices, title){
     });
     
   });
+
   menu.show();
-  
 }
 
 function getDeviceActions(device){
   var longPress = function() {deceideNextElement(device);};
   var shortPress = "not set";
   
+  console.log("getDeviceActions: " +JSON.stringify(device));
   console.log("getDeviceActions for: " + device.name + " with template " + device.template);
   switch (device.template) {
     case "presence":
