@@ -24,8 +24,8 @@
     	  <input type="text" name="localurl" id="localurl" value=""  />
 	</div>
 	<div data-role="fieldcontain">
-    	  <label for="api-url">Internet URL: (e.g.: https://mydyndns.com )</label>
-    	  <input type="text" name="interneturl" id="interneturl" value=""  />
+    	  <label for="api-url">Remote URL: (e.g.: https://mydyndns.com )</label>
+    	  <input type="text" name="remoteurl" id="remoteurl" value=""  />
 	</div>
 	<div data-role="fieldcontain">
     	  <label for="api-url">Username:</label>
@@ -53,14 +53,15 @@
       }
 
       function updateControls() {
-        var btdisconotif = decodeURIComponent($.urlParam("btdisco-notif"));
-        var lowbatnotif = decodeURIComponent($.urlParam("lowbat-notif"));
-        if (btdisconotif != '') {
-          $("#btdisco-notif").val(btdisconotif).slider("refresh");
-        }
-        if (lowbatnotif != '') {
-          $("#lowbat-notif").val(lowbatnotif).slider("refresh");
-        }
+      	var localurl = decodeURIComponent($.urlParam("localurl"));
+      	var remoteurl = decodeURIComponent($.urlParam("remoteurl"));
+        var username = decodeURIComponent($.urlParam("username"));
+        var password = decodeURIComponent($.urlParam("password"));
+        
+        $("#localurl").val(localurl);
+        $("#remoteurl").val(remoteurl);
+        $("#username").val(username);
+        $("#password").val(password);
       }
 
       function saveOptions() {
