@@ -62,7 +62,7 @@
 	}
 
       function updateControls() {
-      	alert(window.location.href);
+      	alert(JSON.parse(decodeURIComponent(window.location.hash.substr(1))));
       	
       	var localurl = getURLVariable("localurl");
       	var remoteurl = getURLVariable("remoteurl");
