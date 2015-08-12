@@ -51,14 +51,23 @@
 	if (!results) { return 0; }
 	return results[1] || 0;
       }
+      
+      function getURLVariable(name)  {
+	  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	  var regexS = "[\\?&]"+name+"=([^&#]*)",
+	      regex = new RegExp(regexS),
+	      results = regex.exec(window.location.href);
+	  if (results == null) return "";
+	  else return decodeURI(results[1]);
+	}
 
       function updateControls() {
       	alert(window.location.href);
       	
-      	var localurl = decodeURIComponent($.urlParam("localurl"));
-      	var remoteurl = decodeURIComponent($.urlParam("remoteurl"));
-        var username = decodeURIComponent($.urlParam("username"));
-        var password = decodeURIComponent($.urlParam("password"));
+      	var localurl = getURLVariable("localurl");
+      	var remoteurl = getURLVariable("remoteurl");
+        var username = getURLVariable("username");
+        var password = getURLVariable("password");
         
         if(localurl == "undefined")
         	localurl = "";
