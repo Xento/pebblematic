@@ -58,16 +58,16 @@
         var username = decodeURIComponent($.urlParam("username"));
         var password = decodeURIComponent($.urlParam("password"));
         
-        if(localurl === undefined)
+        if(localurl == "undefined")
         	localurl = "";
         	
-        if(remoteurl === undefined)
+        if(remoteurl == "undefined")
         	remoteurl = "";
         	
-        if(username === undefined)
+        if(username == "undefined")
         	username = "";
         	
-        if(password === undefined)
+        if(password == "undefined")
         	password = "";
         
         $("#localurl").val(localurl);
