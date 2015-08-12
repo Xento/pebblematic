@@ -78,7 +78,10 @@
 
       function saveOptions() {
         var options = {
-          'api-url': $("#api-url").val()
+          'localurl': $("#localurl").val(),
+          'remoteurl': $("#remoteurl").val(),
+          'username': $("#username").val(),
+          'password': $("#password").val()
         }
         return options;
       }
