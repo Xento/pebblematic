@@ -18,12 +18,22 @@
 	<h3>Pebblematic</h3>
       </div>
       <div data-role="content">
-	<h2>Your credentials will not be tranfered to any server other than your pimatic instance. </br>
-	    What you fill here will not be tranfered to pebble, me, or Leroy Jenkins.</h2>
-
+      	
+      	<div data-role="fieldcontain">
+    	  <label for="api-url">Local URL: (e.g.: https://raspberry, http://192.168.1.25 )</label>
+    	  <input type="text" name="localurl" id="localurl" value=""  />
+	</div>
 	<div data-role="fieldcontain">
-    	  <label for="api-url">API Url: (e.g.: https://user:password@example.com/api/ )</label>
-    	  <input type="text" name="api-url" id="api-url" value=""  />
+    	  <label for="api-url">Internet URL: (e.g.: https://mydyndns.com )</label>
+    	  <input type="text" name="interneturl" id="interneturl" value=""  />
+	</div>
+	<div data-role="fieldcontain">
+    	  <label for="api-url">Username:</label>
+    	  <input type="text" name="username" id="username" value=""  />
+	</div>
+	<div data-role="fieldcontain">
+    	  <label for="api-url">Password:</label>
+    	  <input type="text" name="password" id="password" value=""  />
 	</div>	
 	
 	<div class="ui-body ui-body-b">
