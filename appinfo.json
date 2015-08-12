@@ -30,12 +30,12 @@
             },
             {
                 "file": "images/pimatic-logo-new.png",
+                "menuIcon": true,
                 "name": "IMAGES_PIMATIC_LOGO_NEW_PNG",
                 "type": "png"
             },
             {
                 "file": "images/pebblematic-icon-sw.png",
-                "menuIcon": true,
                 "name": "IMAGES_PEBBLEMATIC_ICON_SW_PNG",
                 "type": "png"
             }

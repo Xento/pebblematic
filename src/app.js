@@ -247,10 +247,12 @@ function loadFromUrl(url, callback) {
     startLoading();
   
   console.log("Loading: "+url);
+  var url2 = mySettings.localurl.replace("://","://"+mySettings.username+":"+mySettings.password+"@")+"/api/" +  url;
+  console.log(url2);
   
   ajax(
     {
-      url: mySettings.apiUrl +  url,
+      url: url2,
       type: 'json',
       cache: false,
       async: (callback !== null) // nasty trick - seems to work. problem with async and loading screens. fix me later please.
@@ -264,7 +266,8 @@ function loadFromUrl(url, callback) {
         _rtnData = data;
     },
     function(error, status, request) {
-      console.log(mySettings.apiUrl);
+      _loadingScreen.hide();
+    
       console.log('The ajax request failed: ' + error + status + request);
       var errorCard = new UI.Card();
       errorCard.scrollable(true);
@@ -280,7 +283,7 @@ function loadFromUrl(url, callback) {
 function startLoading() {
   _loadingScreen = (_loadingScreen === null) ? new UI.Card() :_loadingScreen;
   _loadingScreen.title('Loading...');
-  _loadingScreen.subtitle('Please wait :)');
+  _loadingScreen.subtitle('Please wait');
   _loadingScreen.show();
 }
 
