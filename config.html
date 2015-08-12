@@ -62,29 +62,24 @@
 	}
 
       function updateControls() {
-      	alert(JSON.parse(decodeURIComponent(window.location.hash.substr(1))));
-      	
-      	var localurl = getURLVariable("localurl");
-      	var remoteurl = getURLVariable("remoteurl");
-        var username = getURLVariable("username");
-        var password = getURLVariable("password");
+        var options = JSON.parse(decodeURIComponent(window.location.hash.substr(1)));
         
-        if(localurl == "undefined")
-        	localurl = "";
+        if(options.localurl == "undefined")
+        	options.localurl = "";
         	
-        if(remoteurl == "undefined")
-        	remoteurl = "";
+        if(options.remoteurl == "undefined")
+        	options.remoteurl = "";
         	
-        if(username == "undefined")
-        	username = "";
+        if(options.username == "undefined")
+        	options.username = "";
         	
-        if(password == "undefined")
-        	password = "";
+        if(options.password == "undefined")
+        	options.password = "";
         
-        $("#localurl").val(localurl);
-        $("#remoteurl").val(remoteurl);
-        $("#username").val(username);
-        $("#password").val(password);
+        $("#localurl").val(options.localurl);
+        $("#remoteurl").val(options.remoteurl);
+        $("#username").val(options.username);
+        $("#password").val(options.password);
       }
 
       function saveOptions() {
